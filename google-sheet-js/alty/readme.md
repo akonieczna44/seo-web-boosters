@@ -5,7 +5,7 @@ Alty są kluczowe dla pozycjonowania grafik w wyszukiwaniach Google. Są to fraz
 ## Cel
 Otrzymanie pseudolosowych altów z podanych fraz głównych oraz pseudolosowanych fraz dodatkowych, aby sprawić wrażenie różnorodności.
 
-# Działanie: 
+## Działanie 
 1. Wpisz frazy główne, frazy dalsze, a także ile fraz dodatkowych chcesz umieścić i ile kombinacji otrzymać.
 // program dodaje niezmienione frazy główne i losuje poboczne, odświeża wyniki po rozpoznaniu, że doszło do zmian
 
