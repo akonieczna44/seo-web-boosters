@@ -1,5 +1,6 @@
 # Kombinacje altów z fraz głównych i dodatkowych
-## Motywacja: Alty są kluczowe dla pozycjonowania grafik w wyszukiwaniach Google. Są to frazy kluczowe, które wpisują użytkownicy i oczekują dobrze dobranych grafik. Niekiedy stosuje się praktyki, w których frazy są umieszczane w dużym zagęszczeniu, choć uważam, że warto jest zachować hybrydę - tak jak w tym rozwiązaniu.
+## Motywacja
+Alty są kluczowe dla pozycjonowania grafik w wyszukiwaniach Google. Są to frazy kluczowe, które wpisują użytkownicy i oczekują dobrze dobranych grafik. Niekiedy stosuje się praktyki, w których frazy są umieszczane w dużym zagęszczeniu, choć uważam, że warto jest zachować hybrydę - tak jak w tym rozwiązaniu.
 
 ## Cel: Otrzymanie pseudolosowych altów z podanych fraz głównych oraz pseudolosowanych fraz dodatkowych, aby sprawić wrażenie różnorodności.
 
