@@ -7,11 +7,10 @@ Otrzymanie pseudolosowych altów z podanych fraz głównych oraz pseudolosowanyc
 
 # Działanie: 
 1. Wpisz frazy główne, frazy dalsze, a także ile fraz dodatkowych chcesz umieścić i ile kombinacji otrzymać.
+// program dodaje niezmienione frazy główne i losuje poboczne, odświeża wyniki po rozpoznaniu, że doszło do zmian
 
-[program dodaje niezmienione frazy główne i losuje poboczne, odświeża wyniki po rozpoznaniu, że doszło do zmian] 
-
-3. Wklej ścieżkę do zdjęcia.
-4. Skopiuj wybraną wersję altów lub wersję html do osadzenia zdjęcia z wybraną kombinacją altów.
+2. Wklej ścieżkę do zdjęcia.
+3. Skopiuj wybraną wersję altów lub wersję html do osadzenia zdjęcia z wybraną kombinacją altów.
 
 ![image](https://github.com/user-attachments/assets/7bdb4487-e70e-4d8c-bc0a-4d25821f0a23)
 
