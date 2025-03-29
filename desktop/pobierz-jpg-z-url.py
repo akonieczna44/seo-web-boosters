@@ -3,6 +3,9 @@
 # wchodzi na te adresy url i dopiero stąd je pobiera, 
 # a następnie zapisuje zdjęcia w folderze o nazwie ostatniego segmentu url?
 
+# WEJŚCIE: url stronki
+# WYJŚCIE: folder z pobranymi .jpg + ścieżka tego folderu
+
 import requests
 from bs4 import BeautifulSoup
 import os
