@@ -3,7 +3,7 @@ Mam sporo zdjęć ze starym logotypem (pobranych ze strony) i do wrzucenia do po
 
 
 # stadium przypadków
-1. zdjęcie ze starym logo
+1. zdjęcie ze starym logo                   
 ![image](https://github.com/user-attachments/assets/1a5de6a2-bff6-4a91-a184-1f5c2fc71555)
 2. nowe logo jest pięknie nałożone i dopasowane, ale prześwituje
 ![2](https://github.com/user-attachments/assets/915b002c-e5ee-4ae2-b407-c24d8f0c3c74)
