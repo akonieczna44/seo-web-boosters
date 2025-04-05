@@ -5,7 +5,7 @@
 # a następnie zapisuje zdjęcia w folderze o nazwie ostatniego segmentu url?
 
 # WEJŚCIE: url stronki
-# WYJŚCIE: folder z pobranymi .jpg + ścieżka tego folderu
+# WYJŚCIE: folder z pobranymi .jpg + ścieżka tego folderu (gdzie się zapisał na dysku)
 
 import requests
 from bs4 import BeautifulSoup
@@ -13,7 +13,7 @@ import os
 from urllib.parse import urljoin, urlparse
 import re
 
-# Pytamy użytkownika o URL
+# Pytam o URL
 url = input("🔗 Podaj URL strony z obrazkami: ").strip()
 
 # Ostatni fragment ścieżki URL jako nazwę folderu
@@ -21,12 +21,12 @@ path_parts = urlparse(url).path.rstrip("/").split("/")
 folder_name = path_parts[-1] if path_parts[-1] else "pobrane_obrazki"
 os.makedirs(folder_name, exist_ok=True)
 
-# Pobieramy stronę i parsujemy
+# Pobieramy stronę i parsujemy ulubiony HTML
 response = requests.get(url)
 soup = BeautifulSoup(response.text, "html.parser")
 img_tags = soup.find_all("img")
 
-# Regex do czyszczenia miniaturek typu -1024x768
+# Regex do czyszczenia miniaturek typu -1024x768 - niech będzie
 pattern = re.compile(r"-\d+x\d+(?=\.jpg)")
 
 for img in img_tags:
@@ -52,3 +52,5 @@ full_path = os.path.abspath(folder_name)
 
 print(f"\n📂 Skrypt działa w folderze:\n{script_path}")
 print(f"✅ Wszystkie obrazy zapisane w folderze:\n{full_path}")
+
+# tutaj jedynie trzeba przypilnować i usunąć zbędne kilka grafik typu banery reklamowe, ikonki, jeśli się pobrały
