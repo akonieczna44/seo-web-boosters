@@ -14,3 +14,4 @@ Mam sporo zdjęć ze starym logotypem (pobranych ze strony) i do wrzucenia do po
 4. podmieniam więc zarówno wzorzec starego logo, jak i nowe logo bez przeźroczystości
 ![4](https://github.com/user-attachments/assets/d12a9a03-f0e6-4d09-93f2-1b35890f470b)
 
+// wersja z gotowymi zdjęciami i skryptem, który umieszcza nowe logo przeźroczyste w odpowiednim miejscu dla zdjęć pionowych i poziomych - do zrobienia
