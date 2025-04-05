@@ -1,4 +1,5 @@
 # podane strony nie miały możliwości bezpośredniego pobrania z nich zdjęć - trzeba by wyciągać je bezpośrednio jako adresy url z kodu html, wchodzić i dopiero zapisywać
+# dokładnie to - https://linarem.pl/portfolio-item/tarnow-zabezpieczenie-wiezy-cisnien-przed-ptakami/
 # dlaczego więc nie napisać kodu, który wyciąga takie adresy url obrazków na serwerze, 
 # wchodzi na te adresy url i dopiero stąd je pobiera, 
 # a następnie zapisuje zdjęcia w folderze o nazwie ostatniego segmentu url?
