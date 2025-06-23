@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head><base target="_top"></head>
+  <body>
+    <h3>Wpisz frazę kluczową</h3>
+    <input type="text" id="keyword" placeholder="np. karmnik dla ptaków" style="width:100%;"><br><br>
+
+    <button onclick="runAutosuggest()">📤 Pobierz autosugestie</button>
+    <p id="status"></p>
+
+    <script>
+      function runAutosuggest() {
+        const keyword = document.getElementById("keyword").value.trim();
+        if (!keyword) return alert("Wpisz frazę!");
+        document.getElementById("status").innerText = "Pobieram...";
+        google.script.run.withSuccessHandler(function(count) {
+          document.getElementById("status").innerText = `Dodano ${count} fraz z autosugestii.`;
+        }).getAutosuggestionsToSheet(keyword);
+      }
+    </script>
+  </body>
+</html>
