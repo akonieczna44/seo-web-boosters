@@ -13,6 +13,8 @@ import piexif
 from io import StringIO
 from PIL import Image
 import shutil
+import pillow_heif
+pillow_heif.register_heif_opener()
 
 # --- Funkcja do zmniejszania i zapisu ---
 def resize_and_save(input_path, output_path, format="JPEG"):
@@ -60,7 +62,7 @@ def get_user_mapping(folder):
             empty_count = 0
             lines.append(line)
 
-    files = sorted([f for f in os.listdir(folder) if f.lower().endswith((".jpg", ".jpeg", ".png"))])
+    files = sorted([f for f in os.listdir(folder) if f.lower().endswith((".jpg", ".jpeg", ".png", ".heic"))])
 
     # --- Brak CSV → tylko konwersja do WebP ---
     if len(lines) == 0:
