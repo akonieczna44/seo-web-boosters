@@ -1,11 +1,12 @@
 # pytanko o folder z plikami do ogarnięcia
 # pytanie o kolumnę z tytułami/ csv (filename, title, alt)
 
-## jeśli podasz kolumnę z tytułami, to zmieni tylko tytuły
-## jeśli podasz csv, to zmieni tytuły na nowe i wsadzi title i alty do metadanych (Title → ImageDescription, Alt → UserComment (EXIF))
+## jeśli podasz kolumnę z tytułami, to zmieni tylko tytuły (export do .jpg)
+## jeśli podasz csv, to zmieni tytuły na nowe i wsadzi title i alty do metadanych (Title → ImageDescription, Alt → UserComment (EXIF)) (export do .jpg)
 ## jeśli klikniesz 2x enter, to zmieni to co jest na .webp
+## jeśli wpiszesz "xxx" i enter, to zmieni rozmiar, zostawi tytuły, metadane i zrobi export do .jpg
 
-# sprawdzi rozmiar plików i zmieni na .jpg/ .webp (w zaelżności od tego, co dałeś na początku
+## jeśli masz heic to zmieni go na .jpg/ webp w zależności od tego co wybierzesz
 
 import os
 import pandas as pd
@@ -20,6 +21,32 @@ pillow_heif.register_heif_opener()
 def resize_and_save(input_path, output_path, format="JPEG"):
     image = Image.open(input_path)
     width, height = image.size
+
+    # na sztywno 2560px, żeby nie było przy skalowaniu 2599 px
+    if width >= height:  # landscape lub kwadrat
+        if width > 2560:
+            new_width = 2560
+            new_height = int(height * (2560 / width))
+        else:
+            new_width, new_height = width, height
+    else:  # portrait
+        if height > 2560:
+            new_height = 2560
+            new_width = int(width * (2560 / height))
+        else:
+            new_width, new_height = width, height
+
+    image = image.resize((new_width, new_height), Image.LANCZOS)
+
+    print(f"Zapisano: .../{os.path.basename(output_path)} ({new_width}x{new_height}px)")
+
+# --- Funkcja do zmniejszania JPG przy zachowaniu metadanych ---
+def resize_jpg_with_exif(input_path, output_path):
+    from PIL import Image
+    image = Image.open(input_path)
+    exif = image.info.get('exif')  # zachowujemy oryginalne metadane
+
+    width, height = image.size
     if max(width, height) > 2560:
         scale = 2560 / max(width, height)
         new_width = int(width * scale)
@@ -27,8 +54,10 @@ def resize_and_save(input_path, output_path, format="JPEG"):
         image = image.resize((new_width, new_height), Image.LANCZOS)
     else:
         new_width, new_height = width, height
-    image.save(output_path, format=format)
-    print(f"Zapisano: .../{os.path.basename(output_path)} ({new_width}x{new_height}px)")
+
+    image.save(output_path, "JPEG", exif=exif)
+    print(f"Zmniejszono JPG (z metadanymi): .../{os.path.basename(output_path)} ({new_width}x{new_height}px)")
+
 
 # --- Funkcja do wstawiania metadanych w JPG, bo w webp się nie da ---
 def set_jpg_metadata(file_path, title, alt):
@@ -52,9 +81,15 @@ def get_user_mapping(folder):
 
     lines = []
     empty_count = 0
+    first_line = None
+
     while True:
         line = input()
-        if line.strip() == "":
+        if first_line is None:
+            first_line = line.strip().lower()
+
+        # Podwójny Enter (WebP)
+        if line == "":
             empty_count += 1
             if empty_count >= 2:
                 break
@@ -62,7 +97,17 @@ def get_user_mapping(folder):
             empty_count = 0
             lines.append(line)
 
-    files = sorted([f for f in os.listdir(folder) if f.lower().endswith((".jpg", ".jpeg", ".png", ".heic"))])
+    # --- Tryb "xxx" ---
+    if first_line == "xxx" and len(lines) == 1:
+        print("\nTryb: zmniejszanie JPG z zachowaniem metadanych, bez zmiany nazw.")
+        files = sorted([f for f in os.listdir(folder) if f.lower().endswith((".jpg", ".jpeg", ".png"))])
+        mapping = {}
+        for f in files:
+            mapping[f] = {"new_name": os.path.splitext(f)[0], "title": "", "alt": ""}
+        return mapping, "resize_jpg"
+
+
+    files = sorted([f for f in os.listdir(folder) if f.lower().endswith((".jpg", ".jpeg", ".png"))])
 
     # --- Brak CSV → tylko konwersja do WebP ---
     if len(lines) == 0:
@@ -137,5 +182,18 @@ if __name__ == "__main__":
         print("❌ Folder nie istnieje!")
         exit()
 
-    mapping, with_metadata = get_user_mapping(folder)
-    process_images(folder, mapping, with_metadata)
+    mode = None
+    mapping, mode = get_user_mapping(folder)
+
+    if mode == "resize_jpg":
+        output_folder = os.path.join(folder, "jpg do portfolio")
+        os.makedirs(output_folder, exist_ok=True)
+        for old_name in mapping:
+            old_path = os.path.join(folder, old_name)
+            new_jpg_path = os.path.join(output_folder, old_name)
+            resize_jpg_with_exif(old_path, new_jpg_path)
+        print("\n🎉 Gotowe (zmniejszone JPG z zachowanymi metadanymi)!")
+    elif mode is True:
+        process_images(folder, mapping, with_metadata=True)
+    else:
+        process_images(folder, mapping, with_metadata=False)
